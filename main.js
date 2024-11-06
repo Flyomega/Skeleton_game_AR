@@ -67,10 +67,6 @@ function init() {
   const light = new THREE.AmbientLight(0xffffff, 1.0); // soft white light
   scene.add(light);
 
-  const hemiLight = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 3);
-  hemiLight.position.set(0.5, 1, 0.25);
-  scene.add(hemiLight);
-
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -88,17 +84,18 @@ function init() {
     objLoader.setMaterials(materials);
     objLoader.load('assets/models/source/Z-Anatomy-Layers1-7.obj', (object) => {
       skeletonModel = object;
-      skeletonModel.scale.set(0.01, 0.01, 0.01);
-      scene.add(skeletonModel);
+      skeletonModel.scale.set(1, 1, 1);
     });
   });
 
   const onSelect = () => {
-    if (reticle.visible) {
-      const clonedModel = skeletonModel.clone();
-      clonedModel.position.copy(reticle.position);
-      clonedModel.rotation.copy(reticle.rotation);
-      scene.add(clonedModel);
+    if (reticle.visible && scene.children.indexOf(skeletonModel) === -1) {
+      reticle.matrix.decompose(skeletonModel.position, skeletonModel.quaternion, skeletonModel.scale);
+      scene.add(skeletonModel);
+
+      const light = new THREE.DirectionalLight(0xfdfbd3, 15);
+      light.position.set(0, 5, 0);
+      scene.add(light);
     }
   };
 
