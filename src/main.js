@@ -50,8 +50,6 @@ let audioListener; // Add this at the top with other declarations
 let soundMap = new Map(); // Add this to cache loaded sounds
 let menuMusic;
 
-createMainScene();
-
 function create3DMenu() {
   menuGroup = new THREE.Group();
 
@@ -332,7 +330,7 @@ function createRulesDisplay() {
   return rulesGroup;
 }
 
-function createMainScene() {
+export function createMainScene() {
   if (renderer) {
     renderer.dispose();
     renderer.forceContextLoss();
