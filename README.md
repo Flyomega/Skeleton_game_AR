@@ -4,7 +4,7 @@ Ce projet est un jeu ludique permettant d'identifier la position des organes dan
 
 ## Mode d'emploi
 
-Les règles du jeu sont détaillées dans la partie "règles" du menu principal.
+Les règles du jeu sont détaillées dans la partie "règles" du menu après avoir placé le squelette en appuyant sur le cercle blanc détectant les surfaces.
 
 - Il faut cliquer sur la bonne position de l'organe sur le squelette affiché à l'écran. Le jeu est fini lorsque tous les organes ont été placés correctement. Le but est de réalisé le meilleur temps possible.
 - Vous avez 2 modes de jeu : un mode simple et un mode avancé.
@@ -13,9 +13,9 @@ Les règles du jeu sont détaillées dans la partie "règles" du menu principal.
 
 ## Illustrations
 
-#### Menu principal : ![Menu principal](public/assets/images/screen_main_menu.png)
+#### Menu du jeu : ![Menu du jeu](public/assets/images/menu.png)
 
-#### Choix de difficulté : ![Choix de difficulté](public/assets/images/choix_de_difficultés.png)
+#### Choix de difficulté : ![Choix de difficulté](public/assets/images/choix_difficultés.png)
 
 #### Animation du Jeu : ![Animation du Jeu](anim.gif)
 
