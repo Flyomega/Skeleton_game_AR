@@ -1,6 +1,8 @@
 "use strict";
 
 import * as THREE from 'three';
+import { DevUI } from '@iwer/devui';
+import { XRDevice, metaQuest3 } from 'iwer';
 import { ARButton } from 'three/addons/webxr/ARButton.js';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
@@ -49,6 +51,40 @@ let hapticActuator;
 let audioListener; // Add this at the top with other declarations
 let soundMap = new Map(); // Add this to cache loaded sounds
 let menuMusic;
+
+async function setupXR(xrMode) {
+
+  if (xrMode !== 'immersive-vr') return;
+
+  // iwer setup: emulate vr session
+  let nativeWebXRSupport = false;
+  if (navigator.xr) {
+    nativeWebXRSupport = await navigator.xr.isSessionSupported(xrMode);
+  }
+
+  if (!nativeWebXRSupport) {
+    const xrDevice = new XRDevice(metaQuest3);
+    xrDevice.installRuntime();
+    xrDevice.fovy = (75 / 180) * Math.PI;
+    xrDevice.ipd = 0;
+    window.xrdevice = xrDevice;
+    xrDevice.controllers.right.position.set(0.15649, 1.43474, -0.38368);
+    xrDevice.controllers.right.quaternion.set(
+      0.14766305685043335,
+      0.02471366710960865,
+      -0.0037767395842820406,
+      0.9887216687202454,
+    );
+    xrDevice.controllers.left.position.set(-0.15649, 1.43474, -0.38368);
+    xrDevice.controllers.left.quaternion.set(
+      0.14766305685043335,
+      0.02471366710960865,
+      -0.0037767395842820406,
+      0.9887216687202454,
+    );
+    new DevUI(xrDevice);
+  }
+}
 
 function create3DMenu() {
   menuGroup = new THREE.Group();
@@ -330,12 +366,14 @@ function createRulesDisplay() {
   return rulesGroup;
 }
 
-export function createMainScene() {
+export async function createMainScene() {
   if (renderer) {
     renderer.dispose();
     renderer.forceContextLoss();
     renderer.domElement = null;
   }
+
+  await setupXR('immersive-ar');
 
   init();
 
